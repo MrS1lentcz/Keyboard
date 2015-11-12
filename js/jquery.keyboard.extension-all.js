@@ -328,10 +328,12 @@ $.fn.addAutocomplete = function(options){
 			base.hasAutocomplete = (typeof(base.$autocomplete) === 'undefined') ? false : (base.$autocomplete.options.disabled) ? false : true;
 			// only bind to keydown once
 			if (base.hasAutocomplete) {
-				base.$preview.bind('keydown' + base.autocomplete_namespace, function(e){
-					// send keys to the autocomplete widget (arrow, pageup/down, etc)
-					base.$el.val( base.$preview.val() ).triggerHandler(e);
-				});
+				if (base.options.usePreview === true) {
+					base.$preview.bind('keydown' + base.autocomplete_namespace, function(e){
+						// send keys to the autocomplete widget (arrow, pageup/down, etc)
+						base.$el.val( base.$preview.val() ).triggerHandler(e);
+					});
+				}
 				base.$allKeys.bind('mouseup mousedown mouseleave touchstart touchend touchcancel '.split(' ').join(base.autocomplete_namespace + ' '),function(event){
 					clearTimeout( base.$autocomplete.searching );
 					var evt = event;
